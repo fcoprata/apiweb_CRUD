@@ -5,6 +5,7 @@ using api_web.Domain.DTO;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using api_web.Domain.Model.EmployeeAggregate;
+using Microsoft.EntityFrameworkCore;
 
 namespace api_web.Controllers.V1
 {
@@ -63,6 +64,24 @@ namespace api_web.Controllers.V1
             var employeesDTOS = _mapper.Map<EmployeeDTO>(employess);
 
             return Ok(employeesDTOS);
+        }
+
+        [Authorize]
+        [HttpDelete]
+        [Route("{id}")]
+        public async Task<IActionResult> Delete(int id)
+        {
+            if (id != null)
+            {
+                var employee = _employeeRepository.Delete(id);
+                if (employee == null)
+                {
+                    return NotFound("Funcionario invalido");
+                }
+                return Ok();
+            }
+            return BadRequest("Dado invalido");
+            
         }
     }
 }

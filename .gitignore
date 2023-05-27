@@ -3,6 +3,7 @@
 
 net7.0/
 properties/
+storage/
 
 # User-specific files
 *.suo
